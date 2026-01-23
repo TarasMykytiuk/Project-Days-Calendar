@@ -5,7 +5,11 @@ export default class Controller {
     }
 
     init() {
-        console.log("View: " + this.view.toString());
-        console.log("Model: " + this.model.toString());
+        this.model.setRenderedDate(new Date());
+        const month = this.model.getMonth();
+        const firstDay = this.model.getFirstDay();
+        const numOfDays = this.model.getMonthDays();
+        this.view.renderMonthHeader(month);
+        this.view.renderMonthGrid(firstDay, numOfDays);
     }
 }
