@@ -3,17 +3,51 @@ body {
     padding: 0;
 }
 
-#calendar_container {
-    max-width: 820px;
+#calendar_top {
+    display: flex;
+    flex-direction: row;
+    max-width: 840px;
     margin: 20px auto;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#header_row {
+    max-width: 840px;
+    margin: 0 auto;
+}
+
+#calendar_buttons,
+#date-selectors {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 45%;
+    border: 1px solid;
+    height: 100px;
+    border-radius: 5px;
+    padding: 0 10px;
+    justify-content: space-between;
 }
 
 h1 {
     text-align: center;
+    margin: 0 20px;
+}
+
+button {
+    padding: 5px;
+    width: 100px;
+    height: 30px;
+}
+
+#calendar_container {
+    max-width: 840px;
+    margin: 0 auto;
 }
 
 #header_row,
-.month_row {
+.days_row {
     display: flex;
     width: 100%;
 }
@@ -28,7 +62,7 @@ h1 {
 }
 
 
-.month_cell {
+.day_cell {
     box-sizing: border-box;
     min-width: 120px;
     min-height: 120px;
