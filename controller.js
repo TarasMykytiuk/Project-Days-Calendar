@@ -4,9 +4,10 @@ export default class Controller {
         this.model = model;
     }
 
-    init() {
+    async init() {
         const curDate = new Date();
         this.model.setRenderedDate(curDate);
+        await this.model.loadSpecDays();
         this.renderCalendarTop(curDate);
         this.renderCalendarGrid();
         this.view.bindMonthChange((event) => this.changeMonthHandler(event));
@@ -27,16 +28,20 @@ export default class Controller {
     }
 
     renderCalendarTop(date) {
-        this.view.populateMonthSelect(date.getMonth());
+        const monthNames = this.model.getMonthNames();
+        this.view.populateMonthSelect(date.getMonth(), monthNames);
         this.view.populateYearsSelect(date.getFullYear(), 150);
     }
 
     renderCalendarGrid() {
+        const monthNames = this.model.getMonthNames();
         const month = this.model.getMonth();
         const firstDay = this.model.getFirstDay();
         const numOfDays = this.model.getMonthDays();
+        const specDays = this.model.calcSpecDates(firstDay, numOfDays);
         this.view.clearMonthContainer();
-        this.view.changeMonthName(month);
+        this.view.changeMonthName(monthNames[month]);
         this.view.renderMonthGrid(firstDay, numOfDays);
+        this.view.renderSpecDays(specDays);
     }
 }

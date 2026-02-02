@@ -1,6 +1,5 @@
 export default class View {
     #elements
-    #monthNames
     constructor() {
         this.#elements = {
             monthNameDom: document.getElementById("month_name"),
@@ -11,7 +10,6 @@ export default class View {
             yearSelect: document.getElementById("year_selector"),
             setDateBtn: document.getElementById("set_date_button")
         }
-        this.#monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     }
 
     bindMonthChange(handler) {
@@ -31,9 +29,9 @@ export default class View {
         })
     }
 
-    populateMonthSelect(curMonthNum) {
+    populateMonthSelect(curMonthNum, monthNames) {
         for (let i = 0; i < 12; i++) {
-            this.addOption(this.#elements.monthSelect, i, this.#monthNames[i]);
+            this.addOption(this.#elements.monthSelect, i, monthNames[i]);
         }
         this.#elements.monthSelect.value = curMonthNum;
     }
@@ -56,13 +54,13 @@ export default class View {
         this.#elements.calCont.innerHTML = "";
     }
 
-    changeMonthName(month) {
+    changeMonthName(monthName) {
         const monthNameDom = this.#elements.monthNameDom;
-        monthNameDom.textContent = this.#monthNames[month];
+        monthNameDom.textContent = monthName;
     }
 
     renderMonthGrid(firstDay, totalMonthDays) {
-        let firstEmptyCells = firstDay != 0 ? firstDay - 1 : 6;
+        let firstEmptyCells = firstDay;
         let dateToRender = 1;
         const rowsNum = Math.ceil((totalMonthDays + firstEmptyCells) / 7);
         for (let i = 0; i < rowsNum; i++) {
@@ -74,6 +72,7 @@ export default class View {
                 if (dateToRender <= totalMonthDays && firstEmptyCells <= 0) {
                     const numDom = document.createElement("p");
                     numDom.textContent = dateToRender;
+                    cell.id = "day_" + dateToRender;
                     dateToRender++;
                     cell.appendChild(numDom);
                 }
@@ -82,5 +81,15 @@ export default class View {
             }
             this.#elements.calCont.appendChild(monthRow)
         }
+    }
+
+    renderSpecDays(specDays) {
+        specDays.forEach((day) => {
+            const cell = document.getElementById("day_" + day.date);
+            const a = document.createElement("a");
+            a.textContent = day.name;
+            a.href = day.descriptionURL;
+            cell.appendChild(a);
+        });
     }
 }
