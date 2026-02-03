@@ -50,6 +50,10 @@ export default class Model {
         }
     }
 
+    getDayNames() {
+        return this.#dayNames;
+    }
+
     getMonthNames() {
         return this.#monthNames;
     }

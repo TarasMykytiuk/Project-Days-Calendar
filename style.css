@@ -70,3 +70,7 @@ button {
     border-radius: 5px;
     text-align: center;
 }
+
+.day_cell a {
+    font-size: 10px;
+}
